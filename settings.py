@@ -17,3 +17,10 @@ config_btn_root_pack = {
     'padx': 20,
     'pady': 20,
 }
+
+config_entry = {
+    'bg': BG,
+    'fg': FG,
+    'font': ('Times', 18),
+    'width': 16,
+}

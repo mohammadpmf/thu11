@@ -63,6 +63,24 @@ game.grid()
 btn_back_insert.grid()  
 ##################### End insert window widgets ########################
 
+##################### update window widgets ########################
+def search_game_for_update():
+    name = e_searching_game.get().strip()
+    info = connection.get(name)
+e_searching_game = Entry(update_window, cnf=config_entry)
+btn_searching_game = Button(update_window, cnf=config_btn,
+        text='Search this game', width=16,
+        command=search_game_for_update)
+game_update = UpdateGame(update_window, connection)
+btn_back_update = Button(update_window, text='Back', cnf=config_btn,
+    command=lambda:change_window(management_window, update_window))
+e_searching_game.grid(row=0, column=1)
+btn_searching_game.grid(row=0, column=2)
+game_update.grid(row=1, column=1, columnspan=2)
+btn_back_update.grid(row=2, column=1, columnspan=2)
+##################### End update window widgets ########################
+
+
 ##################### delete window widgets ########################
 def search_delete():
     name = entry_name_delete.get()
@@ -72,11 +90,15 @@ def search_delete():
     messagebox.showinfo("", info)
 def delete_delete():
     name = entry_name_delete.get()
-    answer = connection.delete(name)
-    if answer == 1:
-        messagebox.showinfo("Success", f"Game {name} deleted successfully!")
+    temp = messagebox.askyesno("?", f"Delete {name}?")
+    if temp:
+        answer = connection.delete(name)
+        if answer == 1:
+            messagebox.showinfo("Success", f"Game {name} deleted successfully!")
+        else:
+            messagebox.showwarning("Warning", f"Game {name} is not in table!")
     else:
-        messagebox.showwarning("Warning", f"Game {name} is not in table!")
+        messagebox.showinfo("OK", f"OK. I'll not delete {name}")
 
 lable_name_delete = Label(delete_window, text="Which game you want to delete?")
 entry_name_delete = Entry(delete_window)

@@ -101,6 +101,6 @@ class AddGame(MyGame):
             # messagebox.showerror("Error", f"Game {name} already exsits in shop. Not added.")
             messagebox.showerror("Error", result)
 
-
-
+class UpdateGame(AddGame):
+    pass
 
