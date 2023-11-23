@@ -67,6 +67,11 @@ btn_back_insert.grid()
 def search_game_for_update():
     name = e_searching_game.get().strip()
     info = connection.get(name)
+    if info in [(), None]:
+        game_update.disable()
+    else:
+        game_update.enable()
+
 e_searching_game = Entry(update_window, cnf=config_entry)
 btn_searching_game = Button(update_window, cnf=config_btn,
         text='Search this game', width=16,

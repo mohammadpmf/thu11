@@ -2,6 +2,7 @@ from tkinter import *
 from fallah import *
 from tkinter import messagebox
 import pymysql
+from settings import *
 
 class MyConeection():
     def __init__(self, user='root', password='root'):
@@ -100,6 +101,29 @@ class AddGame(MyGame):
         else:
             # messagebox.showerror("Error", f"Game {name} already exsits in shop. Not added.")
             messagebox.showerror("Error", result)
+
+    def disable(self):
+        self.e_name.configure(state='disabled', disabledbackground=BG)
+        self.e_company.configure(state='disabled', disabledbackground=BG)
+        self.e_age.configure(state='disabled')
+        self.e_price.configure(state='disabled', disabledbackground=BG)
+        self.e_console_type.configure(state='disabled', disabledbackground=BG)
+        self.e_stock.configure(state='disabled', disabledbackground=BG)
+        self.e_address.configure(state='disabled')
+        self.btn_reset.configure(state='disabled')
+        self.btn_save.configure(state='disabled')
+
+    def enable(self):
+        self.e_name.configure(state='normal')
+        self.e_company.configure(state='normal')
+        self.e_age.configure(state='readonly')
+        self.e_price.configure(state='normal')
+        self.e_console_type.configure(state='normal')
+        self.e_stock.configure(state='normal')
+        self.e_address.configure(state='normal')
+        self.btn_reset.configure(state='normal')
+        self.btn_save.configure(state='normal')
+
 
 class UpdateGame(AddGame):
     pass
