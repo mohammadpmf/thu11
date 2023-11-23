@@ -63,10 +63,13 @@ class MyGame():
         self.e_stock                .delete(0, END)
         self.file_address           = None
         self.e_address              .config(text='...', image='')
-
+    
     def seak_picture(self):
+        self.file_address = filedialog.askopenfilename()
+        self.set_picture()
+
+    def set_picture(self):
         try:
-            self.file_address = filedialog.askopenfilename()
             if self.file_address in [None, (), '']:
                 self.file_address = None
                 self.e_address.config(text='...', image='')
@@ -78,7 +81,6 @@ class MyGame():
         except:
             self.file_address = None
             self.e_address.config(text='...', image='')
-            
 
     def grid(self, *args, **kwargs):
         self.frame.grid(*args, **kwargs)
