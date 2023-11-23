@@ -70,11 +70,20 @@ def search_delete():
     if info not in [(), None]:
         info = f"Game: {info[1]}\nCompany: {info[2]}\nAge: {info[3]}\nPrice: {info[4]}\nConsole: {info[5]}\nStock: {info[6]}"
     messagebox.showinfo("", info)
+def delete_delete():
+    name = entry_name_delete.get()
+    answer = connection.delete(name)
+    if answer == 1:
+        messagebox.showinfo("Success", f"Game {name} deleted successfully!")
+    else:
+        messagebox.showwarning("Warning", f"Game {name} is not in table!")
+
 lable_name_delete = Label(delete_window, text="Which game you want to delete?")
 entry_name_delete = Entry(delete_window)
 btn_search_delete_window = Button(delete_window, cnf=config_btn, text='Search', 
                         command=search_delete)
-btn_delete_delete_window = Button(delete_window, cnf=config_btn, text='Delete')
+btn_delete_delete_window = Button(delete_window, cnf=config_btn, text='Delete',
+                        command=delete_delete)
 btn_back_delete = Button(delete_window, cnf=config_btn, text='Back',
                         command=lambda:change_window(management_window, delete_window))
 lable_name_delete.grid(row=1, column=1)

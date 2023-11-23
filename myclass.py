@@ -24,9 +24,15 @@ class MyConeection():
         except pymysql.err.DataError as error:
             return error
     def get(self, values):
-        query = "SELECT * FROM `term4`.`games` WHERE name=%s"
+        query = "SELECT * FROM `term4`.`games` WHERE `name`=%s;"
         self.cursor.execute(query, values)
         return self.cursor.fetchone()
+
+    def delete(self, values):
+        query = "DELETE FROM `term4`.`games` WHERE `name`=%s;"
+        result = self.cursor.execute(query, values)
+        self.db.commit()
+        return result
 
 
 class AddGame(MyGame):
