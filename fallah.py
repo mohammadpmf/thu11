@@ -45,12 +45,15 @@ class MyGame():
         self.e_stock            .grid(row=11, column=3, sticky='news', padx=padx, pady=pady)
         self.e_address          .grid(row=13, column=3, sticky='news', padx=padx, pady=pady)
         
-        # combo_style = ttk.Style(self.root)
-        # combo_style.theme_create(f'madval_combostyle{self}', parent='alt',settings = {'TCombobox':{'configure':{'selectbackground': bg,'fieldbackground': bg,'background': bg}}})
-        # combo_style.theme_use(f'madval_combostyle{self}')
-        # combo_style.map('TCombobox', fieldbackground=[('readonly', bg)])
-        # combo_style.map('TCombobox', selectbackground=[('readonly', bg)])
-        # combo_style.map('TCombobox', selectforeground=[('readonly',  fg2)])
+        combo_style = ttk.Style(self.root)
+        combo_style.theme_create(f'madval_combostyle{self}', parent='alt',settings = {'TCombobox':{'configure':{'selectbackground': bg,'fieldbackground': bg,'background': bg}}})
+        combo_style.theme_use(f'madval_combostyle{self}')
+        combo_style.map('TCombobox', fieldbackground=[('readonly', bg)])
+        combo_style.map('TCombobox', selectbackground=[('readonly', bg)])
+        combo_style.map('TCombobox', selectforeground=[('readonly',  fg2)])
+        combo_style.configure("Treeview",background=bg,foreground=fg2,rowheight=30,fieldbackground=bg)
+        combo_style.map("Treeview",background=[('selected', '#222222')])
+
     
     def reset(self):
         self.e_name                 .delete(0, END)

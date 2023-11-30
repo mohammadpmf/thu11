@@ -24,3 +24,8 @@ config_entry = {
     'font': ('Times', 18),
     'width': 16,
 }
+config_lbl = {
+    'bg': BG,
+    'fg': FG,
+    'font': ('Times', 18),
+}

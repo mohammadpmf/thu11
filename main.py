@@ -131,8 +131,8 @@ def delete_delete():
     else:
         messagebox.showinfo("OK", f"OK. I'll not delete {name}")
 
-lable_name_delete = Label(delete_window, text="Which game you want to delete?")
-entry_name_delete = Entry(delete_window)
+lable_name_delete = Label(delete_window, cnf=config_lbl, text="Which game you want to delete?")
+entry_name_delete = Entry(delete_window, cnf=config_entry)
 btn_search_delete_window = Button(delete_window, cnf=config_btn, text='Search', 
                         command=search_delete)
 btn_delete_delete_window = Button(delete_window, cnf=config_btn, text='Delete',
