@@ -34,7 +34,7 @@ management_window.title('Management window')
 insert_window.title('Insert window')
 update_window.title('Update window')
 delete_window.title('Delete window')
-search_window.geometry('800x600')
+search_window.geometry('1200x800')
 management_window.geometry('800x300')
 insert_window.geometry('800x600')
 update_window.geometry('800x600')
@@ -96,9 +96,7 @@ def search_game_for_update():
         if info[7] != None:
             game_update.file_address=info[7]
             game_update.set_picture()
- 
-
-
+        game_update.prev_name = name
 
 e_searching_game = Entry(update_window, cnf=config_entry)
 btn_searching_game = Button(update_window, cnf=config_btn,
@@ -154,4 +152,33 @@ btn_search = Button(root, text='Search', cnf=config_btn,
     command=lambda:change_window(search_window, root))
 btn_management.pack(cnf=config_btn_root_pack)
 btn_search.pack(cnf=config_btn_root_pack)
+
+
+
+treev = ttk.Treeview(search_window, selectmode ='browse')
+treev.grid(row=1, column=1, columnspan=10)
+verscrlbar = ttk.Scrollbar(search_window, orient ="vertical", command = treev.yview)
+verscrlbar.grid(row=1, column=11, sticky='ns')
+treev.configure(yscrollcommand = verscrlbar.set)
+treev["columns"] = ("1", "2", "3" , "4" , "5" , "6" , "7")
+treev['show'] = 'headings'
+treev.column("1", width = 150, anchor ='c')
+treev.column("2", width = 150, anchor ='c')
+treev.column("3", width = 75 , anchor ='c')
+treev.column("4", width = 100, anchor ='c')
+treev.column("5", width = 100, anchor ='c')
+treev.column("6", width = 75, anchor ='c')
+treev.column("7", width = 200, anchor ='c')
+treev.heading("1", text ="Name")
+treev.heading("2", text ="Company")
+treev.heading("3", text ="Age")
+treev.heading("4", text ="price")
+treev.heading("5", text ="console")
+treev.heading("6", text ="stock")
+treev.heading("7", text ="address")
+
+all_games = connection.get_all()
+for game in all_games:
+    treev.insert("", 'end', text =game[0], values =(game[1:8]))
+search_window.bind('<Escape>', lambda e:change_window(management_window, search_window))
 mainloop()

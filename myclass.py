@@ -35,6 +35,19 @@ class MyConeection():
         self.db.commit()
         return result
 
+    def update(self, prev_name,name, price, stock, company=None, age=None, console=None, address=None):
+        query = "UPDATE `term4`.`games` SET `name`=%s, `price`=%s, `stock`=%s, `company`=%s, `age`=%s, `console`=%s, `image`=%s WHERE `name`=%s"
+        values = prev_name, price, stock, company, age, console, address, name
+        result = self.cursor.execute(query, values)
+        self.db.commit()
+        return result
+
+    def get_all(self):
+        query = "SELECT * FROM `term4`.`games`;"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+
 
 class AddGame(MyGame):
     def __init__(self, root, connection:MyConeection, bg='#333333', fg='orange', fg2='orange', text="Game Info", font=('Times', '20'), bd=1, labelanchor='n', relief='raised', abg="orange", afg="#333333", padx=5, pady=5):
@@ -126,5 +139,58 @@ class AddGame(MyGame):
 
 
 class UpdateGame(AddGame):
-    pass
+    def __init__(self, root, connection: MyConeection, bg='#333333', fg='orange', fg2='orange', text="Game Info", font=('Times', '20'), bd=1, labelanchor='n', relief='raised', abg="orange", afg="#333333", padx=5, pady=5):
+        super().__init__(root, connection, bg, fg, fg2, text, font, bd, labelanchor, relief, abg, afg, padx, pady)
+        self.btn_save.config(text='Update', command=self.update)
+    def update(self):
+        name = self.e_name.get()
+        company = self.e_company.get()
+        age = self.e_age.get()
+        price = self.e_price.get()
+        console = self.e_console_type.get()
+        stock = self.e_stock.get()
+        address = self.file_address
+        if name == '':
+            messagebox.showerror("Error", "You can not update name to nothing.")
+            self.e_name.focus_set()
+            return
+        try:
+            price = int(price)
+            if price<0:
+                messagebox.showerror("Error", "price can not be negative.")
+                self.e_price.focus_set()
+                return
+        except:
+            messagebox.showerror("Error", "You must Enter digits for price")
+            self.e_price.delete(0, END)
+            self.e_price.focus_set()
+            return
+        try:
+            stock = int(stock)
+            if stock<0:
+                messagebox.showerror("Error", "stock can not be negative.")
+                self.e_stock.focus_set()
+                return
+        except:
+            messagebox.showerror("Error", "You must Enter digits for stock")
+            self.e_stock.delete(0, END)
+            self.e_stock.focus_set()
+            return
+        if company=='':
+            company=None
+        if age=='':
+            age=None
+        if console=='':
+            console=None
+        if address=='':
+            address=None
+        result = self.connection.update(self.prev_name, name, price, stock, company, age, console, address)
+        print(result)
+
+        # if result==0:
+        #     messagebox.showinfo("Success", f"Game {name} added succesfully to shop.")
+        # else:
+        #     # messagebox.showerror("Error", f"Game {name} already exsits in shop. Not added.")
+        #     messagebox.showerror("Error", result)
+
 
