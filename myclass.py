@@ -38,9 +38,12 @@ class MyConeection():
     def update(self, name, price, stock, old_name, company=None, age=None, console=None, address=None):
         query = "UPDATE `term4`.`games` SET `name`=%s, `price`=%s, `stock`=%s, `company`=%s, `age`=%s, `console`=%s, `image`=%s WHERE `name`=%s"
         values = name, price, stock, company, age, console, address, old_name
-        result = self.cursor.execute(query, values)
-        self.db.commit()
-        return result
+        try:
+            result = self.cursor.execute(query, values)
+            self.db.commit()
+            return result
+        except pymysql.err.IntegrityError as error:
+            return error
 
     def get_all(self):
         query = "SELECT * FROM `term4`.`games`;"
@@ -224,7 +227,12 @@ class UpdateGame(AddGame):
         if address=='':
             address=None
         result = self.connection.update(name, price, stock, old_name, company, age, console, address)
-        print(result)
+        if result == 1:
+            messagebox.showinfo("Success", f"Game {name} has changed successfully!")
+        elif result == 0:
+            messagebox.showerror("Error", "Game did not change!")
+        else:
+            messagebox.showerror("Error", result)
 
         # if result==0:
         #     messagebox.showinfo("Success", f"Game {name} added succesfully to shop.")
