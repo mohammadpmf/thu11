@@ -35,9 +35,9 @@ class MyConeection():
         self.db.commit()
         return result
 
-    def update(self, prev_name,name, price, stock, company=None, age=None, console=None, address=None):
+    def update(self, name, price, stock, old_name, company=None, age=None, console=None, address=None):
         query = "UPDATE `term4`.`games` SET `name`=%s, `price`=%s, `stock`=%s, `company`=%s, `age`=%s, `console`=%s, `image`=%s WHERE `name`=%s"
-        values = prev_name, price, stock, company, age, console, address, name
+        values = name, price, stock, company, age, console, address, old_name
         result = self.cursor.execute(query, values)
         self.db.commit()
         return result
@@ -141,7 +141,45 @@ class AddGame(MyGame):
 class UpdateGame(AddGame):
     def __init__(self, root, connection: MyConeection, bg='#333333', fg='orange', fg2='orange', text="Game Info", font=('Times', '20'), bd=1, labelanchor='n', relief='raised', abg="orange", afg="#333333", padx=5, pady=5):
         super().__init__(root, connection, bg, fg, fg2, text, font, bd, labelanchor, relief, abg, afg, padx, pady)
+        self.e_old = Entry(self.frame, bg=bg, fg=fg2, font=font, bd=bd, insertbackground=fg2)
+        self.btn_search = Button(self.frame, bg=bg, fg=fg2, font=font, bd=bd, activebackground=abg, activeforeground=afg, text='Search this game',command=self.search)
         self.btn_save.config(text='Update', command=self.update)
+        self.e_old.grid(row=0, column=3)
+        self.btn_search.grid(row=0, column=1)
+    
+    def search(self):
+        old_name = self.e_old.get().strip()
+        info = self.connection.get(old_name)
+        print(info)
+        if info in [(), None]:
+            self.disable()
+        else:
+            self.enable()
+            self.e_name.delete(0, END)
+            self.e_company.delete(0, END)
+            self.e_price.delete(0, END)
+            self.e_console_type.delete(0, END)
+            self.e_stock.delete(0, END)
+            self.file_address=None
+            self.set_picture()
+            self.e_age.config(state='normal')
+            self.e_age.delete(0, END)
+            self.e_age.config(state='readonly')
+            self.e_name.insert(0, info[1])
+            if info[2] != None:
+                self.e_company.insert(0, info[2])
+            if info[3] != None:
+                self.e_age.config(state='normal')
+                self.e_age.insert(0, info[3])
+                self.e_age.config(state='readonly')
+            self.e_price.insert(0, info[4])
+            if info[5] != None:
+                self.e_console_type.insert(0, info[5])
+            self.e_stock.insert(0, info[6])
+            if info[7] != None:
+                self.file_address=info[7]
+                self.set_picture()
+        
     def update(self):
         name = self.e_name.get()
         company = self.e_company.get()
@@ -150,6 +188,7 @@ class UpdateGame(AddGame):
         console = self.e_console_type.get()
         stock = self.e_stock.get()
         address = self.file_address
+        old_name = self.e_old.get()
         if name == '':
             messagebox.showerror("Error", "You can not update name to nothing.")
             self.e_name.focus_set()
@@ -184,7 +223,7 @@ class UpdateGame(AddGame):
             console=None
         if address=='':
             address=None
-        result = self.connection.update(self.prev_name, name, price, stock, company, age, console, address)
+        result = self.connection.update(name, price, stock, old_name, company, age, console, address)
         print(result)
 
         # if result==0:

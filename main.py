@@ -64,49 +64,9 @@ btn_back_insert.grid()
 ##################### End insert window widgets ########################
 
 ##################### update window widgets ########################
-def search_game_for_update():
-    name = e_searching_game.get().strip()
-    info = connection.get(name)
-    print(info)
-    if info in [(), None]:
-        game_update.disable()
-    else:
-        game_update.enable()
-        game_update.e_name.delete(0, END)
-        game_update.e_company.delete(0, END)
-        game_update.e_price.delete(0, END)
-        game_update.e_console_type.delete(0, END)
-        game_update.e_stock.delete(0, END)
-        game_update.file_address=None
-        game_update.set_picture()
-        game_update.e_age.config(state='normal')
-        game_update.e_age.delete(0, END)
-        game_update.e_age.config(state='readonly')
-        game_update.e_name.insert(0, info[1])
-        if info[2] != None:
-            game_update.e_company.insert(0, info[2])
-        if info[3] != None:
-            game_update.e_age.config(state='normal')
-            game_update.e_age.insert(0, info[3])
-            game_update.e_age.config(state='readonly')
-        game_update.e_price.insert(0, info[4])
-        if info[5] != None:
-            game_update.e_console_type.insert(0, info[5])
-        game_update.e_stock.insert(0, info[6])
-        if info[7] != None:
-            game_update.file_address=info[7]
-            game_update.set_picture()
-        game_update.prev_name = name
-
-e_searching_game = Entry(update_window, cnf=config_entry)
-btn_searching_game = Button(update_window, cnf=config_btn,
-        text='Search this game', width=16,
-        command=search_game_for_update)
 game_update = UpdateGame(update_window, connection)
 btn_back_update = Button(update_window, text='Back', cnf=config_btn,
     command=lambda:change_window(management_window, update_window))
-e_searching_game.grid(row=0, column=1)
-btn_searching_game.grid(row=0, column=2)
 game_update.grid(row=1, column=1, columnspan=2)
 btn_back_update.grid(row=2, column=1, columnspan=2)
 ##################### End update window widgets ########################
