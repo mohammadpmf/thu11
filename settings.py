@@ -1,31 +1,86 @@
-BG = "#333333"
-FG = "orange"
+# BG = "#333333"
+# FG = "orange"
+# config_btn = {
+#     'bg': BG,
+#     'fg': FG,
+#     'activebackground': FG,
+#     'activeforeground': BG,
+#     'font': ('Times', 18),
+#     'padx': 5,
+#     'pady': 5,
+#     'width': 10,
+# }
+# config_btn_root_pack = {
+#     'side': 'left',
+#     'fill': 'both',
+#     'expand': True,
+#     'padx': 20,
+#     'pady': 20,
+# }
+
+# config_entry = {
+#     'bg': BG,
+#     'fg': FG,
+#     'font': ('Times', 18),
+#     'width': 16,
+# }
+# config_lbl = {
+#     'bg': BG,
+#     'fg': FG,
+#     'font': ('Times', 18),
+# }
+BG = '#333333'
+FG = 'orange'
+FONT = ('Times', 20)
+PADX = 5
+PADY = 5
+
 config_btn = {
     'bg': BG,
     'fg': FG,
     'activebackground': FG,
     'activeforeground': BG,
-    'font': ('Times', 18),
+    'font': FONT,
+    'bd': 1,
     'padx': 5,
     'pady': 5,
-    'width': 10,
+    'width': 10
 }
-config_btn_root_pack = {
-    'side': 'left',
-    'fill': 'both',
-    'expand': True,
-    'padx': 20,
-    'pady': 20,
+
+config_lbl = {
+    'bg': BG,
+    'fg': FG,
+    'bd': 1,
+    'font': FONT,
+    'padx': 5,
+    'pady': 5,
+}
+
+config_lbl_frame = {
+    'bg': BG,
+    'fg': FG,
+    'font': FONT,
+    'labelanchor': 'n'
 }
 
 config_entry = {
     'bg': BG,
     'fg': FG,
-    'font': ('Times', 18),
-    'width': 16,
+    'font': FONT,
+    'bd': 1,
+    'insertbackground': FG
 }
-config_lbl = {
-    'bg': BG,
-    'fg': FG,
-    'font': ('Times', 18),
+
+grid_config = {
+    'sticky': 'news',
+    'padx': 5,
+    'pady': 5
+}
+
+config_btn_root_pack = {
+    'side': 'left',
+    'fill': 'both',
+    'expand': True,
+    'padx': 10,
+    'pady': 10
 }

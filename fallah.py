@@ -46,6 +46,7 @@ class MyGame():
         self.e_address          .grid(row=13, column=3, sticky='news', padx=padx, pady=pady)
         
         style = ttk.Style(self.root)
+        # style.theme_use('clam')
         style.theme_create(f'madval_style{self}', parent='alt',settings = {'TCombobox':{'configure':{'selectbackground': bg,'fieldbackground': bg,'background': bg}}})
         style.theme_use(f'madval_style{self}')
         style.map('TCombobox', fieldbackground=[('readonly', bg)])

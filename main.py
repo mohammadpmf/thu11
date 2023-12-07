@@ -91,6 +91,11 @@ def delete_delete():
     else:
         messagebox.showinfo("OK", f"OK. I'll not delete {name}")
 
+def search():
+    result = connection.search(e_name.get(), e_company.get(), e_age.get(), e_min_price.get(), e_max_price.get(), e_console.get(), e_min_stock.get(), e_max_stock.get())
+    print(result)
+    
+
 lable_name_delete = Label(delete_window, cnf=config_lbl, text="Which game you want to delete?")
 entry_name_delete = Entry(delete_window, cnf=config_entry)
 btn_search_delete_window = Button(delete_window, cnf=config_btn, text='Search', 
@@ -141,4 +146,33 @@ all_games = connection.get_all()
 for game in all_games:
     treev.insert("", 'end', text =game[0], values =(game[1:8]))
 search_window.bind('<Escape>', lambda e:change_window(management_window, search_window))
+Label(search_window, cnf=config_lbl, text='Search by Name: ').grid(row=2, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Company: ').grid(row=3, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Age: ').grid(row=4, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Min Price: ').grid(row=5, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Max Price: ').grid(row=6, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Console: ').grid(row=7, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Min Stock: ').grid(row=8, column=1)
+Label(search_window, cnf=config_lbl, text='Search by Max Stock: ').grid(row=9, column=1)
+e_name = Entry(search_window, cnf=config_entry)
+e_company = Entry(search_window, cnf=config_entry)
+e_age = Entry(search_window, cnf=config_entry)
+e_min_price = Entry(search_window, cnf=config_entry)
+e_max_price = Entry(search_window, cnf=config_entry)
+e_console = Entry(search_window, cnf=config_entry)
+e_min_stock = Entry(search_window, cnf=config_entry)
+e_max_stock = Entry(search_window, cnf=config_entry)
+e_name.grid(row=2, column=2)
+e_company.grid(row=3, column=2)
+e_age.grid(row=4, column=2)
+e_min_price.grid(row=5, column=2)
+e_max_price.grid(row=6, column=2)
+e_console.grid(row=7, column=2)
+e_min_stock.grid(row=8, column=2)
+e_max_stock.grid(row=9, column=2)
+btn_search = Button(search_window, cnf=config_btn, text="Search", command=search)
+btn_back_search = Button(search_window, cnf=config_btn, text="Back", command=lambda:change_window(root, search_window))
+btn_search.grid(row=3, rowspan=3, sticky='news', column=3)
+btn_back_search.grid(row=6, rowspan=3, sticky='news', column=3)
+
 mainloop()
