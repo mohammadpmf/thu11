@@ -153,7 +153,7 @@ def refresh_treeview():
         treev.insert("", 'end', text =game[0], values =(game[1:8]))
 refresh_treeview()
 
-search_window.bind('<Escape>', lambda e:change_window(root, search_window))
+search_window.bind('<Escape>', lambda e:change_window(management_window, search_window))
 Label(search_window, cnf=config_lbl, text='Search by Name: ').grid(row=2, column=1)
 Label(search_window, cnf=config_lbl, text='Search by Company: ').grid(row=3, column=1)
 Label(search_window, cnf=config_lbl, text='Search by Age: ').grid(row=4, column=1)
