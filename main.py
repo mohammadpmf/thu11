@@ -4,6 +4,8 @@ from myclass import *
 def change_window(show_window: Tk, hide_window:Tk):
     show_window.deiconify()
     hide_window.withdraw()
+    if show_window == search_window:
+        refresh_treeview()
 
 connection = MyConeection()
 root = Tk()
@@ -92,9 +94,11 @@ def delete_delete():
         messagebox.showinfo("OK", f"OK. I'll not delete {name}")
 
 def search():
-    result = connection.search(e_name.get(), e_company.get(), e_age.get(), e_min_price.get(), e_max_price.get(), e_console.get(), e_min_stock.get(), e_max_stock.get())
-    print(result)
-    
+    games = connection.search(e_name.get(), e_company.get(), e_age.get(), e_min_price.get(), e_max_price.get(), e_console.get(), e_min_stock.get(), e_max_stock.get())
+    treev.delete(*treev.get_children())
+    for game in games:
+        treev.insert("", 'end', text =game[0], values =(game[1:8]))
+
 
 lable_name_delete = Label(delete_window, cnf=config_lbl, text="Which game you want to delete?")
 entry_name_delete = Entry(delete_window, cnf=config_entry)
@@ -142,9 +146,13 @@ treev.heading("5", text ="console")
 treev.heading("6", text ="stock")
 treev.heading("7", text ="address")
 
-all_games = connection.get_all()
-for game in all_games:
-    treev.insert("", 'end', text =game[0], values =(game[1:8]))
+def refresh_treeview():
+    treev.delete(*treev.get_children())
+    all_games = connection.get_all()
+    for game in all_games:
+        treev.insert("", 'end', text =game[0], values =(game[1:8]))
+refresh_treeview()
+
 search_window.bind('<Escape>', lambda e:change_window(management_window, search_window))
 Label(search_window, cnf=config_lbl, text='Search by Name: ').grid(row=2, column=1)
 Label(search_window, cnf=config_lbl, text='Search by Company: ').grid(row=3, column=1)

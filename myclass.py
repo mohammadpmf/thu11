@@ -50,6 +50,36 @@ class MyConeection():
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
+    def search(self, name, company, age, min_price, max_price, console, min_stock, max_stock):
+        query = "SELECT * FROM `term4`.`games` WHERE 1=1"
+        values = []
+        if name!="":
+            query += " AND name LIKE %s"
+            values.append(f"%{name}%")
+        if company!="":
+            query += " AND company LIKE %s"
+            values.append(f"%{company}%")
+        if age!="":
+            query += " AND age > %s"
+            values.append(age)
+        if min_price!="":
+            query += " AND price >= %s"
+            values.append(min_price)
+        if max_price!="":
+            query += " AND price <= %s"
+            values.append(max_price)
+        if console!="":
+            query += " AND console LIKE %s"
+            values.append(f"%{console}%")
+        if min_stock!="":
+            query += " AND stock >= %s"
+            values.append(min_stock)
+        if max_stock!="":
+            query += " AND stock <= %s"
+            values.append(max_stock)
+        query +=";"
+        self.cursor.execute(query, values)
+        return self.cursor.fetchall()
 
 
 class AddGame(MyGame):
