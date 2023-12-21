@@ -1,4 +1,3 @@
-from tkinter import *
 from fallah import *
 from tkinter import messagebox
 import pymysql
@@ -11,6 +10,9 @@ class MyConeection():
         query = "CREATE SCHEMA IF NOT EXISTS `term4`;"
         self.cursor.execute(query)
         query = "CREATE TABLE IF NOT EXISTS `term4`.`games` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,`name` VARCHAR(45) NOT NULL,`company` VARCHAR(40) NULL,`age` TINYINT UNSIGNED NULL,`price` INT UNSIGNED NOT NULL,`console` VARCHAR(30) NULL,`stock` SMALLINT UNSIGNED NOT NULL,`image` VARCHAR(200) NULL,PRIMARY KEY (`id`),UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE);"
+        self.cursor.execute(query)
+        # query = "CREATE TABLE IF NOT EXISTS `term4`.`orders` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,`game_name` INT UNSIGNED NOT NULL,`full_name` VARCHAR(60) NOT NULL,`phone_number` VARCHAR(11) NOT NULL,`address` VARCHAR(200) NOT NULL,`postal_code` VARCHAR(10) NULL,PRIMARY KEY (`id`),UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,INDEX `game_name_idx` (`game_name` ASC) VISIBLE,CONSTRAINT `game_name`  FOREIGN KEY (`game_name`)  REFERENCES `term4`.`games` (`id`)  ON DELETE NO ACTION  ON UPDATE NO ACTION);"
+        query = "CREATE TABLE IF NOT EXISTS `term4`.`orders` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,`game_name` VARCHAR(45) NOT NULL,`full_name` VARCHAR(60) NOT NULL,`phone_number` VARCHAR(11) NOT NULL,`address` VARCHAR(200) NOT NULL,`postal_code` VARCHAR(10) NULL,PRIMARY KEY (`id`),UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);"
         self.cursor.execute(query)
     
     def insert(self,name, price, stock, company=None, age=None, console=None, address=None):
