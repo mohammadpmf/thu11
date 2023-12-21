@@ -6,6 +6,7 @@ def change_window(show_window: Tk, hide_window:Tk):
     hide_window.withdraw()
     if show_window == search_window:
         refresh_treeview()
+        btn_pic.grid_forget()
 
 connection = MyConeection()
 root = Tk()
@@ -122,12 +123,42 @@ btn_search = Button(root, text='Search', cnf=config_btn,
 btn_management.pack(cnf=config_btn_root_pack)
 btn_search.pack(cnf=config_btn_root_pack)
 
+def dbl_click(event):
+    def buy():
+        # ذخیره کردن اطلاعات خریدار در دیتابیس با شما
+        import smtplib, ssl
+        message = "successfully kharid shod."
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login("madval1369@gmail.com", "rwdfntxebjstxfig")
+            server.sendmail("madval1369@gmail.com", "mohammad.pfallah@gmail.com", message)
+            print('Email Sent!!!')
 
+
+    item = treev.selection()[0]
+    info = treev.item(item,"values")
+    aks = treev.item(item,"values")[-1]
+    try:
+        img = Image.open(aks)
+        img = img.resize((250, 250))
+        img = ImageTk.PhotoImage(img)
+        btn_pic.config(image=img)
+        btn_pic.grid(row=1, column=12)
+    except FileNotFoundError:
+        btn_pic.grid_forget()
+    finally:
+        answer = messagebox.askyesno("Buy?", f"Want to buye {info[0]}")
+        if answer:
+            buy()
+    btn_pic.mainloop()
+        
 
 treev = ttk.Treeview(search_window, selectmode ='browse')
 treev.grid(row=1, column=1, columnspan=10)
+treev.bind("<Double-1>", dbl_click)
 verscrlbar = ttk.Scrollbar(search_window, orient ="vertical", command = treev.yview)
 verscrlbar.grid(row=1, column=11, sticky='ns')
+btn_pic = Button(search_window)
 treev.configure(yscrollcommand = verscrlbar.set)
 treev["columns"] = ("1", "2", "3" , "4" , "5" , "6" , "7")
 treev['show'] = 'headings'
@@ -153,7 +184,7 @@ def refresh_treeview():
         treev.insert("", 'end', text =game[0], values =(game[1:8]))
 refresh_treeview()
 
-search_window.bind('<Escape>', lambda e:change_window(root, search_window))
+search_window.bind('<Escape>', lambda e:change_window(management_window, search_window))
 Label(search_window, cnf=config_lbl, text='Search by Name: ').grid(row=2, column=1)
 Label(search_window, cnf=config_lbl, text='Search by Company: ').grid(row=3, column=1)
 Label(search_window, cnf=config_lbl, text='Search by Age: ').grid(row=4, column=1)
